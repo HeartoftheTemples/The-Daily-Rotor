@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>25th CAB | UH-60M Daily Standardization Quiz</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #eab308;
+      --accent-hover: #ca8a04;
+      --badge-bg: #334155;
+      --answer-bg: #0f172a;
+      --success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: auto 0;
+    }
+
+    header {
+      text-align: center;
+      padding-bottom: 4px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    select {
+      flex: 1;
+      min-width: 180px;
+      background-color: var(--card);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .counter {
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      padding: 10px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background-color: var(--badge-bg);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .q-number {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .answer-box {
+      background-color: var(--answer-bg);
+      border-left: 4px solid var(--success);
+      border-radius: 10px;
+      padding: 16px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .answer-box.visible {
+      display: flex;
+    }
+
+    .answer-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--success);
+    }
+
+    .answer-text {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .reference-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--card-border);
+      padding-top: 8px;
+      font-style: italic;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.08s ease, background-color 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-reveal {
+      background-color: #334155;
+      color: var(--text);
+    }
+
+    .btn-reveal:hover {
+      background-color: #475569;
+    }
+
+    .btn-next {
+      background-color: var(--accent);
+      color: #0f172a;
+    }
+
+    .btn-next:hover {
+      background-color: var(--accent-hover);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>UH-60M Standardization QOTD</h1>
+      <p>25th CAB • Wheeler Army Airfield, HI</p>
+    </header>
+
+    <div class="controls">
+      <select id="categoryFilter" aria-label="Filter by Reference Category">
+        <option value="ALL">All Categories (105 Questions)</option>
+        <option value="UH-60M">UH-60M Systems & Limits (TM -10)</option>
+        <option value="AR 95-1">AR 95-1 Flight Regulations</option>
+        <option value="H-60 ATM">H-60 ATM (TC 3-04.33)</option>
+        <option value="USAG-HI">USAG-HI Flying Rules</option>
+        <option value="25th CAB SOP">25th CAB Tactical SOP</option>
+      </select>
+      <div class="counter" id="poolCounter">Pool: 105</div>
+    </div>
+
+    <main class="card">
+      <div class="meta-row">
+        <span class="badge" id="qCategory">Loading...</span>
+        <span class="q-number" id="qId">#001</span>
+      </div>
+
+      <div class="question-text" id="qText">
+        Loading random question...
+      </div>
+
+      <div class="answer-box" id="answerBox">
+        <div class="answer-label">Answer</div>
+        <div class="answer-text" id="aText"></div>
+        <div class="reference-text" id="rText"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-reveal" id="revealBtn" onclick="toggleAnswer()">Reveal Answer</button>
+        <button class="btn-next" onclick="nextRandomQuestion()">Next Random Question ↻</button>
+      </div>
+    </main>
+
+    <footer>
+      TM 1-1520-280-10 (Ch 3) • AR 95-1 • TC 3-04.33 • USAG-HI • 25th CAB SOP
+    </footer>
+  </div>
+
+  <script>
+    const questionBank = [
+      // ==================== UH-60M SYSTEMS, AVIONICS & LIMITS (45 Questions) ====================
+      {
+        id: 1,
+        category: "UH-60M",
+        q: "On the UH-60M EICAS display, what happens to a parameter's readout and label when an input fails, and what color border surrounds an engine/transmission tape group if one item enters a cautionary range?",
+        a: "The label displays as a fail flag (black text on a red background), the readout is replaced by three red dashes, and the tape is removed. The border surrounding the tape group matches the color of the most critical item in that group—yellow for cautionary.",
+        ref: "TM 1-1520-280-10, Para 2-29a(2)"
+      },
+      {
+        id: 2,
+        category: "UH-60M",
+        q: "Under normal UH-60M configuration, which Data Concentrator Unit (DCU) and Embedded GPS/INS (EGI) serve as the primary default data sources for the pilot (MFD 3/4) versus the copilot (MFD 1/2)?",
+        a: "The copilot (MFD 1/2) defaults to DCU 1 and EGI 1; the pilot (MFD 3/4) defaults to DCU 2 and EGI 2.",
+        ref: "TM 1-1520-280-10, Table 2-4"
+      },
+      {
+        id: 3,
+        category: "UH-60M",
+        q: "When is Turbine Gas Temperature (TGT) symbology displayed on the Primary Flight Display (PFD) Power Pod?",
+        a: "Only under abnormal engine conditions: when either engine TGT exceeds the continuous limit of 793°C (30-minute range), when the difference between TGT1 and TGT2 exceeds 75°C, or when either engine is out.",
+        ref: "TM 1-1520-280-10, Para 2-29a(6)(b) & 2-29b(3)"
+      },
+      {
+        id: 4,
+        category: "UH-60M",
+        q: "On an engine equipped with an Enhanced Digital Engine Control Unit (EDECU), what torque validation code displays on the torque meter upon AC power-up if the Discrete Application Selection (DAS) plug is properly installed for T700-GE-701D limiting values?",
+        a: "25% (if it displays 15%, the DAS plug is missing and the 701D engine will operate with 701C limiting values).",
+        ref: "TM 1-1520-280-10, Para 2-26b(1) & Figure 2-13"
+      },
+      {
+        id: 5,
+        category: "UH-60M",
+        q: "Under what three conditions will an EDECU automatically bypass the 10-minute TGT limiter and activate the 2.5-minute contingency power TGT limit (903°C)?",
+        a: "When NP drops below 96%, when there is greater than 3% droop between reference NP and actual NP, or when an NP droop rate greater than 5% per second exists while NP is at or below NP reference speed (does not require opposite engine torque < 50%).",
+        ref: "TM 1-1520-280-10, Para 2-26b(2)"
+      },
+      {
+        id: 6,
+        category: "UH-60M",
+        q: "When batteries are the sole source of electrical power in flight on the UH-60M, approximately how long will they power essential DC equipment (excluding searchlight use), and which MFDs remain powered?",
+        a: "Approximately 15 minutes. Only the pilot's inboard MFD (#3) is powered by the DC essential bus.",
+        ref: "TM 1-1520-280-10, Para 2-61b"
+      },
+      {
+        id: 7,
+        category: "UH-60M",
+        q: "What are the pitch and bank limits that trigger the UH-60M PFD 'Unusual Attitude' declutter mode, and at what pitch and bank angles is full ADI symbology restored?",
+        a: "Unusual attitude declutter triggers at 30° nose up, 20° nose down, or 65° bank (left or right). Full ADI symbology restores once pitch returns between 25° nose up and 15° nose down and bank is less than 60°.",
+        ref: "TM 1-1520-280-10, Para 2-72e(4)"
+      },
+      {
+        id: 8,
+        category: "UH-60M",
+        q: "During UH-60M Required Navigation Performance (RNP) operations, what is the maximum ground speed during a turn due to FMS steering limitations, and what is the maximum rolling steering limit on Radius-to-Fix (RF) legs?",
+        a: "132 knots GS maximum during a turn, and a 20° maximum rolling steering limit on RF legs.",
+        ref: "TM 1-1520-280-10, Para 2-72e(7)"
+      },
+      {
+        id: 9,
+        category: "UH-60M",
+        q: "What is the maximum permissible gross weight of the UH-60M helicopter, and what is the maximum cargo hook capacity?",
+        a: "Maximum gross weight is 22,000 lbs (23,500 lbs for external load missions only with specific restrictions). The cargo hook has a maximum capacity of 9,000 lbs.",
+        ref: "TM 1-1520-280-10, Para 5-7 & 5-17"
+      },
+      {
+        id: 10,
+        category: "UH-60M",
+        q: "What is the maximum airspeed (VNE) for the UH-60M at sea level up to 3,000 feet PA and ≤20°C FAT, and what is the maximum autorotation airspeed?",
+        a: "VNE is 193 KIAS (at or below 16,825 lbs GW, decreasing with higher GW/altitude/temperature). Maximum autorotation airspeed is 150 KIAS.",
+        ref: "TM 1-1520-280-10, Para 5-10 & Fig 5-2"
+      },
+      {
+        id: 11,
+        category: "UH-60M",
+        q: "What are the maximum airspeeds for operating the UH-60M with cabin doors open, and with the cockpit doors removed?",
+        a: "Cabin doors full open: 145 KIAS. Cabin doors open in intermediate positions: 100 KIAS. Cockpit doors removed: 130 KIAS.",
+        ref: "TM 1-1520-280-10, Para 5-10"
+      },
+      {
+        id: 12,
+        category: "UH-60M",
+        q: "What are the maximum airspeeds for landing light extension/retraction and searchlight operation on the UH-60M?",
+        a: "Landing light extension/retraction: 130 KIAS (fixed/extended limit 180 KIAS). Searchlight extension/retraction/operation: 100 KIAS (stowed 180 KIAS).",
+        ref: "TM 1-1520-280-10, Para 5-10"
+      },
+      {
+        id: 13,
+        category: "UH-60M",
+        q: "What are the maximum allowable sideward and rearward flight airspeeds for the UH-60M?",
+        a: "45 KTAS (or KIAS/GS depending on wind conditions; structural/controllability limit is 45 knots).",
+        ref: "TM 1-1520-280-10, Para 5-11"
+      },
+      {
+        id: 14,
+        category: "UH-60M",
+        q: "What are the UH-60M slope landing limitations (nose-up, nose-down, and lateral)?",
+        a: "15° nose-up, 6° nose-down, and 15° lateral (upslope/downslope). Note: Reduce lateral limit by 2° for every 5 knots of crosswind.",
+        ref: "TM 1-1520-280-10, Para 5-12"
+      },
+      {
+        id: 15,
+        category: "UH-60M",
+        q: "What are the rotor brake operational limits on the UH-60M regarding rotor RPM and engine operation?",
+        a: "Do not apply the rotor brake above 40% NR (36% NR if APU is running for normal stops; up to 40% NR for emergency). Never start engines with the rotor brake engaged except during authorized maintenance checks.",
+        ref: "TM 1-1520-280-10, Para 5-9"
+      },
+      {
+        id: 16,
+        category: "UH-60M",
+        q: "What is the maximum wind velocity for starting or stopping the rotor blades on the UH-60M?",
+        a: "45 knots.",
+        ref: "TM 1-1520-280-10, Para 5-9"
+      },
+      {
+        id: 17,
+        category: "UH-60M",
+        q: "What are the T700-GE-701D engine TGT limits for Maximum Continuous (30-min), Intermediate Rated Power (10-min), Contingency Power (2.5-min), and Starting?",
+        a: "Continuous (30 min): 793°C; IRP (10 min): 865°C; Contingency (2.5 min): 903°C; Starting: 851°C (abort start if TGT approaches 851°C).",
+        ref: "TM 1-1520-280-10, Para 5-5 & Fig 5-1"
+      },
+      {
+        id: 18,
+        category: "UH-60M",
+        q: "What is the Dual-Engine Maximum Continuous Torque limit on the UH-60M, and what is the 10-second transient torque limit?",
+        a: "Dual-engine maximum continuous torque is 100% (up to 80 KIAS) and 120% (above 80 KIAS). Single-engine continuous is 135% (above 80 KIAS) / 110% (at or below 80 KIAS). Transient (10 sec) is 144%.",
+        ref: "TM 1-1520-280-10, Para 5-6 & Fig 5-1"
+      },
+      {
+        id: 19,
+        category: "UH-60M",
+        q: "What are the normal operating, minimum continuous, and maximum transient Main Rotor RPM (NR) limits in power-on and power-off flight?",
+        a: "Power-on normal: 95%–101% (100% nominal). Power-off (autorotation) continuous: 90%–105%; transient (5 sec): 85%–110% (max 110%).",
+        ref: "TM 1-1520-280-10, Para 5-8 & Fig 5-1"
+      },
+      {
+        id: 20,
+        category: "UH-60M",
+        q: "What are the starter duty cycle limits for the T700-GE-701D engine?",
+        a: "Two consecutive start cycles (up to 60 seconds each) with a 60-second rest period between cycles, followed by a 30-minute cooling period.",
+        ref: "TM 1-1520-280-10, Para 5-5"
+      },
+      {
+        id: 21,
+        category: "UH-60M",
+        q: "What are the APU continuous and 5-minute load/bleed-air limits on the UH-60M, and what is the maximum altitude for APU start and operation?",
+        a: "Max altitude for start and operation is 15,000 feet PA (20,000 feet for emergency electrical power only). Continuous operation up to 43°C FAT; above 43°C FAT, limit generator + bleed air load to 5 minutes.",
+        ref: "TM 1-1520-280-10, Para 5-5"
+      },
+      {
+        id: 22,
+        category: "UH-60M",
+        q: "How does the UH-60M Fuel System supply fuel to the engines, and how much usable fuel is held in the two main crashworthy fuel cells?",
+        a: "Engine-driven suction fuel boost pumps draw fuel directly from the two main tanks (no submerged electric boost pumps in main cells). Total usable fuel is approximately 360 gallons (approx. 2,340–2,448 lbs depending on fuel density).",
+        ref: "TM 1-1520-280-10, Para 2-27"
+      },
+      {
+        id: 23,
+        category: "UH-60M",
+        q: "At approximately what fuel quantity does the '#1 FUEL LOW' or '#2 FUEL LOW' advisory illuminate on the UH-60M EICAS?",
+        a: "When fuel remaining in the respective main tank drops to approximately 172 lbs (roughly 20–30 minutes of flight time remaining per tank).",
+        ref: "TM 1-1520-280-10, Para 2-27"
+      },
+      {
+        id: 24,
+        category: "UH-60M",
+        q: "Describe the UH-60M hydraulic system architecture—how many hydraulic pumps are installed, where are they mounted, and what does the Backup Hydraulic Pump do?",
+        a: "Three hydraulic pumps: #1 and #2 pumps are driven by the left and right accessory modules on the main transmission. The #3 Backup Pump is electric (AC-powered via the APU or main generators) and automatically activates if #1 or #2 hydraulic pressure drops or during tail rotor servo 1st/2nd stage failures.",
+        ref: "TM 1-1520-280-10, Para 2-32"
+      },
+      {
+        id: 25,
+        category: "UH-60M",
+        q: "What happens if both primary hydraulic systems (#1 and #2) fail in flight on the UH-60M?",
+        a: "The Backup Hydraulic Pump automatically turns on to power the #1 primary flight control servos and the #2 tail rotor servo, restoring hydraulic assist to all flight controls.",
+        ref: "TM 1-1520-280-10, Para 2-32"
+      },
+      {
+        id: 26,
+        category: "UH-60M",
+        q: "In the UH-60M Flight Control System, what is the purpose of the Digital Automatic Flight Control System (DAFCS) Stabilator control, and at what airspeed does the stabilator begin programming down from its full-up (38°–40°) hover position?",
+        a: "The stabilator automatically programs trailing-edge down to minimize pitch attitude changes with airspeed, collective, and pitch rate. It remains full trailing-edge down below ~30–40 KIAS to prevent main rotor downwash from pitching the nose up, and begins streamlining upward above ~40 KIAS.",
+        ref: "TM 1-1520-280-10, Para 2-36"
+      },
+      {
+        id: 27,
+        category: "UH-60M",
+        q: "If the automatic stabilator mode fails in flight and the pilot must fly with a fixed stabilator position, what is the maximum airspeed limitation if the stabilator cannot be slewed from 0°?",
+        a: "Refer to the Stabilator Failure Airspeed Limit chart (at 0° fixed, VNE is typically 150 KIAS; if stuck full down at 39°, airspeed is restricted to 80 KIAS).",
+        ref: "TM 1-1520-280-10, Para 5-10 & 9-12"
+      },
+      {
+        id: 28,
+        category: "UH-60M",
+        q: "What are the four sub-modes of the UH-60M Stability Augmentation System (SAS) and Flight Path Stabilization (FPS)?",
+        a: "SAS 1 (digital, inner-loop rate damping), SAS 2 (digital, inner-loop rate damping), Trim (force-feel/gradient), and FPS (outer-loop attitude, heading, airspeed, and altitude hold).",
+        ref: "TM 1-1520-280-10, Para 2-35"
+      },
+      {
+        id: 29,
+        category: "UH-60M",
+        q: "What is the authority limit of the SAS actuators in the UH-60M flight control system?",
+        a: "±10% of total control travel (5% per SAS channel).",
+        ref: "TM 1-1520-280-10, Para 2-35"
+      },
+      {
+        id: 30,
+        category: "UH-60M",
+        q: "What are the emergency procedure immediate action steps for an ENGINE FIRE IN FLIGHT on the UH-60M?",
+        a: "1. POWER CONTROL LEVER (affected engine) — OFF. 2. ENGINE FUEL SYSTEM SELECTOR (affected engine) — OFF. 3. FIRE EXTGH switch — MAIN (or RESERVE if needed).",
+        ref: "TM 1-1520-280-10, Para 9-5"
+      },
+      {
+        id: 31,
+        category: "UH-60M",
+        q: "What are the immediate action steps for a DUAL-ENGINE FAILURE IN FLIGHT (autorotation) on the UH-60M?",
+        a: "1. Collective — Adjust to maintain NR between 90% and 105%. 2. Airspeed — Adjust as required (80 KIAS for maximum glide distance; 65 KIAS for minimum rate of descent). 3. Flare and cushion landing.",
+        ref: "TM 1-1520-280-10, Para 9-4"
+      },
+      {
+        id: 32,
+        category: "UH-60M",
+        q: "What are the immediate action steps for an ENGINE COMPRESSOR STALL on the UH-60M?",
+        a: "1. Collective — Reduce to lower power demand on affected engine. 2. Engine anti-ice — ON (if icing conditions exist). 3. Affected PCL — Retard slightly to determine if stall clears; if TGT exceeds limits or stall persists, shut down affected engine.",
+        ref: "TM 1-1520-280-10, Para 9-4"
+      },
+      {
+        id: 33,
+        category: "UH-60M",
+        q: "What are the immediate action steps for a LOSS OF TAIL ROTOR THRUST (Fixed Pitch / Control Failure) in flight on the UH-60M?",
+        a: "If power-on controllability cannot be maintained: 1. Maintain airspeed above 40–60 KIAS (minimum drag/weathercock stability). 2. Reduce PCLs to IDLE/OFF prior to touchdown and perform a shallow autorotative/running landing.",
+        ref: "TM 1-1520-280-10, Para 9-9"
+      },
+      {
+        id: 34,
+        category: "UH-60M",
+        q: "When a '#1 MAIN XMSN OIL PRESS' or '#2 MAIN XMSN OIL PRESS' caution appears accompanied by low main transmission oil pressure (< 20 psi) or high oil temperature (> 120°C), what is the required emergency action?",
+        a: "LAND IMMEDIATELY.",
+        ref: "TM 1-1520-280-10, Para 9-7"
+      },
+      {
+        id: 35,
+        category: "UH-60M",
+        q: "Define the three emergency landing terms used in the UH-60M Operator's Manual: 'Land Immediately', 'Land as Soon as Possible', and 'Land as Soon as Practicable'.",
+        a: "Land Immediately: Land without delay at the nearest safe area (even if hazardous). Land as Soon as Possible: Land at the nearest suitable landing area without delay. Land as Soon as Practicable: Extended flight is not recommended; landing site and duration are at pilot discretion.",
+        ref: "TM 1-1520-280-10, Para 9-1"
+      },
+      {
+        id: 36,
+        category: "UH-60M",
+        q: "What is the purpose of the UH-60M Gust Lock, and what interlock prevents flying with it engaged?",
+        a: "The gust lock secures the main rotor hub and blades against wind gusts up to 60 knots when parked. Mechanical interlocks prevent the engine Power Control Levers from advancing out of OFF while the gust lock is engaged.",
+        ref: "TM 1-1520-280-10, Para 2-12"
+      },
+      {
+        id: 37,
+        category: "UH-60M",
+        q: "How many main rotor blades and tail rotor blades does the UH-60M have, and what is the tail rotor cant angle?",
+        a: "Four wide-chord main rotor blades (with swept tips) and four tail rotor blades (two composite cross-beam paddles canted 20° upward to provide 2.5% of total vertical lift).",
+        ref: "TM 1-1520-280-10, Para 2-11 & 2-14"
+      },
+      {
+        id: 38,
+        category: "UH-60M",
+        q: "What is the minimum rotor tip clearance from the ground on a level surface with the UH-60M at normal static weight?",
+        a: "Approximately 10 feet 6 inches (with rotor stationary; droop stops keep blades from striking the fuselage during shutdown).",
+        ref: "TM 1-1520-280-10, Fig 1-2"
+      },
+      {
+        id: 39,
+        category: "UH-60M",
+        q: "What is the UH-60M's electrical power generation configuration under normal flight conditions?",
+        a: "Two 30/45 kVA oil-cooled AC generators driven by the main transmission accessory modules, plus one 20/30 kVA APU AC generator. Two Transformer Rectifier Units (TRUs) convert 115V AC to 28V DC, backed up by two 24V NiCad batteries.",
+        ref: "TM 1-1520-280-10, Para 2-58"
+      },
+      {
+        id: 40,
+        category: "UH-60M",
+        q: "On the UH-60M, how does the Ice Detection System notify the crew of icing conditions, and what is the maximum icing intensity the helicopter is certified to penetrate?",
+        a: "The ice detector probe illuminates 'ICING' on the EICAS and displays Liquid Water Content (LWC) in g/m³. The UH-60M is certified for flight into Trace and Light icing (and Moderate icing for up to 15 minutes with blade de-ice operational).",
+        ref: "TM 1-1520-280-10, Para 2-46 & 5-13"
+      },
+      {
+        id: 41,
+        category: "UH-60M",
+        q: "What is the minimum crew required to operate the UH-60M in flight, and what are their required stations?",
+        a: "Two pilots (Pilot and Copilot) at the flight controls, plus at least one Crew Chief/non-rated crewmember in the cabin for tactical/passenger/sling operations as required by mission/SOP.",
+        ref: "TM 1-1520-280-10, Para 5-3"
+      },
+      {
+        id: 42,
+        category: "UH-60M",
+        q: "What happens on the UH-60M if both main AC generators fail in flight?",
+        a: "The APU generator (if running) automatically picks up the AC buses. If the APU is off, the crew starts the APU in flight to restore full AC/DC power; until then, the two batteries power the DC Essential Bus (including Pilot MFD #3, backup flight instruments, and essential radios).",
+        ref: "TM 1-1520-280-10, Para 9-10"
+      },
+      {
+        id: 43,
+        category: "UH-60M",
+        q: "What is the maximum crosswind component for hovering and takeoff/landing operations on the UH-60M?",
+        a: "35 knots (note: slope landing limits are reduced by 2° for every 5 knots of crosswind).",
+        ref: "TM 1-1520-280-10, Para 5-11 & 5-12"
+      },
+      {
+        id: 44,
+        category: "UH-60M",
+        q: "What is the purpose of the UH-60M Flight Director (FD) Go-Around (GA) mode when activated via the cyclic GA button?",
+        a: "Commands wings-level roll attitude, a positive pitch-up climb attitude, and commands collective/airspeed (if coupled) to climb at 70–80 KIAS.",
+        ref: "TM 1-1520-280-10, Para 2-73"
+      },
+      {
+        id: 45,
+        category: "UH-60M",
+        q: "What is the maximum ambient temperature limit for operating the UH-60M?",
+        a: "+52°C (+125°F) FAT (Free Air Temperature).",
+        ref: "TM 1-1520-280-10, Para 5-13"
+      },
+
+      // ==================== AR 95-1 FLIGHT REGULATIONS (20 Questions) ====================
+      {
+        id: 46,
+        category: "AR 95-1",
+        q: "Per AR 95-1, what are the minimum fuel reserve requirements at the planned destination for VFR and IFR helicopter flights?",
+        a: "VFR: 20 minutes of fuel at planned cruising speed. IFR: 30 minutes of fuel at planned cruising speed (plus fuel to reach the alternate airfield, if an alternate is required).",
+        ref: "AR 95-1, Para 5-2"
+      },
+      {
+        id: 47,
+        category: "AR 95-1",
+        q: "Under AR 95-1, when is an alternate airfield required on an Army IFR flight plan (the '1-2-3 Rule')?",
+        a: "When from 1 hour before to 1 hour after the ETA at the destination, the forecast ceiling is less than 2,000 feet above the airport elevation OR the forecast visibility is less than 3 statute miles.",
+        ref: "AR 95-1, Para 5-2"
+      },
+      {
+        id: 48,
+        category: "AR 95-1",
+        q: "What are the minimum weather requirements for an airport to qualify as an alternate on an Army IFR flight plan per AR 95-1?",
+        a: "If the airport has an IAP with precision minima: 600-foot ceiling and 2 SM visibility (or 400 ft / 1 SM above the lowest applicable approach minima, whichever is higher). If non-precision only: 800-foot ceiling and 2 SM visibility (or 400 ft / 1 SM above minima). If no IAP: VFR descent from MEA.",
+        ref: "AR 95-1, Para 5-2"
+      },
+      {
+        id: 49,
+        category: "AR 95-1",
+        q: "What are the standard Army helicopter VFR weather minimums outside controlled airspace (Class G) at or below 1,200 feet AGL during the day and night?",
+        a: "Day: Clear of clouds and 1/2 SM visibility (or as restricted by local SOP/USAG-HI). Night: Clear of clouds and 1 SM visibility (unless higher minimums are established by local command).",
+        ref: "AR 95-1, Table 5-1"
+      },
+      {
+        id: 50,
+        category: "AR 95-1",
+        q: "Per AR 95-1, who has the final authority and responsibility for the operation and safety of the aircraft and crew?",
+        a: "The Pilot in Command (PC), regardless of rank.",
+        ref: "AR 95-1, Para 3-3"
+      },
+      {
+        id: 51,
+        category: "AR 95-1",
+        q: "What is the minimum crew rest period required by AR 95-1 prior to flight duty, and how many hours of uninterrupted sleep must be afforded?",
+        a: "A minimum of 12 consecutive hours of crew rest, which must afford the opportunity for at least 8 hours of uninterrupted sleep.",
+        ref: "AR 95-1, Para 2-5"
+      },
+      {
+        id: 52,
+        category: "AR 95-1",
+        q: "What are the maximum flight duty period (FDP) and maximum flight time limits in a 24-hour period under AR 95-1?",
+        a: "Maximum FDP is 16 hours (may be extended by commander up to 18 hours with risk mitigation). Maximum actual flight time in a 24-hour period is 8 hours (or 10 hours for strategic deployment/emergency).",
+        ref: "AR 95-1, Para 2-5"
+      },
+      {
+        id: 53,
+        category: "AR 95-1",
+        q: "Per AR 95-1, how long prior to takeoff must a crewmember abstain from alcohol, and what is the rule regarding residual effects?",
+        a: "At least 12 hours prior to takeoff, AND the crewmember must be completely free of any residual effects (hangover) before flight duty.",
+        ref: "AR 95-1, Para 8-9"
+      },
+      {
+        id: 54,
+        category: "AR 95-1",
+        q: "What is the minimum time required between blood donation (450 ml or more) and flying duty per AR 95-1?",
+        a: "72 hours (3 days), plus written clearance from a flight surgeon.",
+        ref: "AR 95-1, Para 8-9"
+      },
+      {
+        id: 55,
+        category: "AR 95-1",
+        q: "What is the mandatory waiting period after scuba diving before flying in an unpressurized Army helicopter per AR 95-1?",
+        a: "24 hours.",
+        ref: "AR 95-1, Para 8-9"
+      },
+      {
+        id: 56,
+        category: "AR 95-1",
+        q: "When are supplemental oxygen systems required for Army helicopter aircrews under AR 95-1?",
+        a: "Above 10,000 feet PA for flights exceeding 1 hour; above 12,000 feet PA for flights exceeding 30 minutes; and at all times above 14,000 feet PA.",
+        ref: "AR 95-1, Para 8-10"
+      },
+      {
+        id: 57,
+        category: "AR 95-1",
+        q: "Under AR 95-1, what are the currency requirements for a pilot to act as Pilot in Command (PC) in an aircraft, and what is required for Night Vision Goggle (NVG) currency?",
+        a: "Aircraft currency: 1 hour of flight time in the aircraft category/design within the preceding 60 days. NVG currency: 1 hour of NVG flight time within the preceding 60 days.",
+        ref: "AR 95-1, Para 4-7"
+      },
+      {
+        id: 58,
+        category: "AR 95-1",
+        q: "What are the instrument currency requirements in AR 95-1 to fly under IFR?",
+        a: "Within the preceding 6 calendar months: 6 hours of instrument flight time (actual or simulated, up to 3 hours in an approved simulator) and 6 instrument approaches.",
+        ref: "AR 95-1, Para 4-8"
+      },
+      {
+        id: 59,
+        category: "AR 95-1",
+        q: "Per AR 95-1, what documents must be aboard an Army aircraft prior to flight (commonly remembered as 'ARROW' / 'AWFUL')?",
+        a: "Aircraft logbook (DA Form 2408-12 / 2408-13-1 / weight & balance DD Form 365-4), Operator's Manual/Checklist (TM -10/-CL), Flight Plan / Manifest (DD Form 175/1801 & DD Form 2131), and required FLIP/navigational charts.",
+        ref: "AR 95-1, Para 5-1"
+      },
+      {
+        id: 60,
+        category: "AR 95-1",
+        q: "When is a crewmember required to wear an approved aviation helmet, fire-resistant clothing (A2CU), and survival vest per AR 95-1?",
+        a: "On all flights in Army helicopters unless specifically exempted by the commander for specialized missions.",
+        ref: "AR 95-1, Para 8-11"
+      },
+      {
+        id: 61,
+        category: "AR 95-1",
+        q: "Under AR 95-1, who may approve a High-Risk mission on the Deliberate Risk Assessment Worksheet (DRAW)?",
+        a: "The first O-6 (Brigade Commander / CAB Commander) in the chain of command (Extremely High Risk requires the first General Officer).",
+        ref: "AR 95-1, Para 2-6"
+      },
+      {
+        id: 62,
+        category: "AR 95-1",
+        q: "Per AR 95-1, when must a passenger manifest (DD Form 2131) be left at the departure airfield?",
+        a: "Whenever passengers are carried on any flight (except local training flights departing and returning to the same airfield without intermediate stops with new passengers).",
+        ref: "AR 95-1, Para 5-4"
+      },
+      {
+        id: 63,
+        category: "AR 95-1",
+        q: "What is the minimum altitude Army helicopters must maintain over congested areas of cities, towns, or open-air assemblies per AR 95-1 and FAA rules?",
+        a: "An altitude that permits an emergency landing without undue hazard to persons or property on the surface (generally at least 1,000 feet above the highest obstacle within 2,000 feet horizontally, unless conducting approved tactical/landing operations).",
+        ref: "AR 95-1, Para 5-3 & 14 CFR 91.119"
+      },
+      {
+        id: 64,
+        category: "AR 95-1",
+        q: "When are overwater survival equipment (life preservers / life rafts) required for Army helicopter flights per AR 95-1?",
+        a: "Life preservers must be worn whenever flying beyond autorotational gliding distance from land. Life rafts are required when operating more than 50 NM from land (or outside SAR response range per local command).",
+        ref: "AR 95-1, Para 8-11"
+      },
+      {
+        id: 65,
+        category: "AR 95-1",
+        q: "What is the maximum allowable flight time in 7 consecutive days and 30 consecutive days under standard AR 95-1 fatigue management rules?",
+        a: "30 hours in 7 consecutive days; 90 hours in 30 consecutive days (unless waived by the commander during combat/contingency operations).",
+        ref: "AR 95-1, Para 2-5"
+      },
+
+      // ==================== H-60 ATM (TC 3-04.33) (15 Questions) ====================
+      {
+        id: 66,
+        category: "H-60 ATM",
+        q: "Per the H-60 ATM, what are the three flight modes/altitudes of Terrain Flight, and how is each defined?",
+        a: "1. Low-Level: Constant airspeed and altitude (typically 50–200 ft AGL) above obstacles. 2. Contour: Varying altitude/airspeed following earth's contours closely. 3. Nap-of-the-Earth (NOE): Weaving flight as close to the earth's surface as vegetation/obstacles permit while varying speed and altitude.",
+        ref: "TC 3-04.33 (H-60 ATM), Task 1070"
+      },
+      {
+        id: 67,
+        category: "H-60 ATM",
+        q: "During a Power Check (HIT / Hover Power Check) per the H-60 ATM, what are the key parameters evaluated to verify aircraft performance?",
+        a: "Compare Predicted Hover Torque (from Performance Planning Card) against Actual Hover Torque at a stabilized 10-foot hover, and verify TGT is within limits (Max Torque Available vs. Torque Required to hover).",
+        ref: "TC 3-04.33, Task 1038"
+      },
+      {
+        id: 68,
+        category: "H-60 ATM",
+        q: "What are the three types of Reconnaissance performed prior to landing in an unimproved or confined area per the H-60 ATM?",
+        a: "1. High Reconnaissance (evaluates wind, elevation, obstacles, approach/departure paths, suitability). 2. Low Reconnaissance (verifies surface conditions, slope, obstacles at low altitude). 3. Ground Reconnaissance (conducted by crewmember after touchdown).",
+        ref: "TC 3-04.33, Task 1054"
+      },
+      {
+        id: 69,
+        category: "H-60 ATM",
+        q: "In the H-60 ATM, what is the standard hover height for a normal stationary hover and hover taxi?",
+        a: "10 feet (wheel-to-ground clearance) for a normal stationary hover; 10–15 feet for hover taxi (up to ~20 knots).",
+        ref: "TC 3-04.33, Task 1044 & 1046"
+      },
+      {
+        id: 70,
+        category: "H-60 ATM",
+        q: "Per the H-60 ATM, what are the three types of takeoffs and when is each selected?",
+        a: "1. Takeoff from a Hover (normal, adequate power and obstacle clearance). 2. Max Performance Takeoff (confined area/high obstacles, requires >10% hover torque margin). 3. Rolling Takeoff (insufficient hover power/high gross weight, smooth surface).",
+        ref: "TC 3-04.33, Task 1048 & 1050"
+      },
+      {
+        id: 71,
+        category: "H-60 ATM",
+        q: "What is the standard approach angle and termination point for a Normal Approach to a Hover per the H-60 ATM?",
+        a: "A constant apparent angle (typically 10°–15°) terminating at a 10-foot stationary hover over the intended point of landing, maintaining a smooth rate of closure (apparent walking pace).",
+        ref: "TC 3-04.33, Task 1058"
+      },
+      {
+        id: 72,
+        category: "H-60 ATM",
+        q: "When is a Steep Approach executed per the H-60 ATM, and what is the primary aerodynamic hazard the crew must monitor?",
+        a: "Executed when high obstacles exist on the approach path (angle ~30°–45°). Primary hazard: Vortex Ring State (Settling with Power) if rate of descent exceeds ~300–500 fpm with airspeed below effective translational lift (ETL).",
+        ref: "TC 3-04.33, Task 1058"
+      },
+      {
+        id: 73,
+        category: "H-60 ATM",
+        q: "What are the three conditions necessary for Vortex Ring State (Settling with Power) to develop, and what is the standard recovery procedure?",
+        a: "Conditions: 1. Airspeed below ETL (~16–24 kts). 2. Rate of descent > 300 fpm (typically 500+ fpm). 3. 20%–100% power applied. Recovery: Apply forward cyclic to gain airspeed above ETL, lower collective (if altitude permits), or execute Vuichard recovery (lateral cyclic + pedal).",
+        ref: "TC 3-04.33 & TC 3-04.4"
+      },
+      {
+        id: 74,
+        category: "H-60 ATM",
+        q: "What is Dynamic Rollover, what is the critical rollover angle for the UH-60M, and how do you recover?",
+        a: "Dynamic rollover occurs when the helicopter pivots laterally around a fixed skid/wheel on the ground beyond its critical angle (approx. 25°–30° on the UH-60M). Recovery: Smoothly and immediately lower collective (do not jerk collective down, which can induce negative blade flapping).",
+        ref: "TC 3-04.33, Task 1064 & TC 3-04.4"
+      },
+      {
+        id: 75,
+        category: "H-60 ATM",
+        q: "During a Slope Landing per the H-60 ATM, which wheel touches down first, and what is the proper control technique?",
+        a: "The upslope wheel touches down first. Maintain level fuselage with lateral cyclic while lowering collective smoothly until the downslope wheel settles; neutralize lateral cyclic once both main wheels are firm.",
+        ref: "TC 3-04.33, Task 1064"
+      },
+      {
+        id: 76,
+        category: "H-60 ATM",
+        q: "In NVG operations per the H-60 ATM, what is the minimum required crew briefing item regarding scanning and airspace surveillance?",
+        a: "Sector scanning assignments (left/right/center/below) using overlapping pie-shaped scan patterns to overcome the 40° field-of-view limitation of AN/AVS-6/9 goggles and detect wires/obstacles early.",
+        ref: "TC 3-04.33, Task 2022"
+      },
+      {
+        id: 77,
+        category: "H-60 ATM",
+        q: "During External Load (Sling Load) operations per the H-60 ATM, what is the maximum allowable airspeed unless a lower limit is specified by the load rigging manual?",
+        a: "Limited by load stability (typically 60–80 KIAS for standard loads like A-22 bags/HMMWVs; never exceed the airspeed at which lateral oscillation or trail angle becomes unstable).",
+        ref: "TC 3-04.33, Task 2026"
+      },
+      {
+        id: 78,
+        category: "H-60 ATM",
+        q: "What are the five elements of the standard H-60 ATM Crew Briefing?",
+        a: "1. Mission Overview. 2. Aircraft & Equipment (performance/fuel/COMSEC). 3. Crew Duties & Responsibilities (transfer of controls, airspace surveillance, emergency duties). 4. Flight Procedures (routes, altitudes, weather, IIMC). 5. Risk Management.",
+        ref: "TC 3-04.33, Task 1000"
+      },
+      {
+        id: 79,
+        category: "H-60 ATM",
+        q: "What is the standard 3-step positive Transfer of Flight Controls protocol in the H-60 ATM?",
+        a: "1. Pilot transferring says: 'You have the flight controls.' 2. Pilot accepting says: 'I have the flight controls.' 3. Pilot transferring confirms: 'You have the flight controls.'",
+        ref: "TC 3-04.33, Para 1-4"
+      },
+      {
+        id: 80,
+        category: "H-60 ATM",
+        q: "What are the immediate actions for Inadvertent IMC (IIMC) per the H-60 ATM?",
+        a: "1. Attitude (level wings on ADI). 2. Heading (maintain heading; turn only to avoid known terrain). 3. Torque (adjust to climb power). 4. Airspeed (adjust to climb airspeed, 70–80 KIAS). Then squawk 7700 (if required), contact ATC, and climb to MSA/MEA.",
+        ref: "TC 3-04.33, Task 1082"
+      },
+
+      // ==================== USAG-HI FLYING RULES (13 Questions) ====================
+      {
+        id: 81,
+        category: "USAG-HI",
+        q: "Per USAG-HI Flying Rules, what are the local VFR weather minimums for Army helicopters operating in the Wheeler Army Airfield (PHHI) local flying area during day and night?",
+        a: "Day VFR: 1,000-foot ceiling and 3 SM visibility (Special VFR requires ATC clearance, clear of clouds, 1 SM day / 3 SM night). Night VFR: 1,500-foot ceiling and 3 SM visibility.",
+        ref: "USAG-HI Reg 95-1 (Flying Rules), Ch 3"
+      },
+      {
+        id: 82,
+        category: "USAG-HI",
+        q: "Per USAG-HI Flying Rules, what is the standard traffic pattern altitude at Wheeler Army Airfield (PHHI)?",
+        a: "1,500 feet MSL (approx. 660 feet AGL; PHHI field elevation is 837 feet MSL).",
+        ref: "USAG-HI Reg 95-1, Ch 4"
+      },
+      {
+        id: 83,
+        category: "USAG-HI",
+        q: "Which side is the standard VFR traffic pattern at Wheeler Army Airfield (PHHI) for Runway 06 and Runway 24?",
+        a: "South of the runway (Right traffic for Runway 06; Left traffic for Runway 24) to avoid Schofield Barracks cantonment area and noise-sensitive areas to the north.",
+        ref: "USAG-HI Reg 95-1, Ch 4"
+      },
+      {
+        id: 84,
+        category: "USAG-HI",
+        q: "What are the noise abatement altitude and standoff requirements over populated areas, beaches, and shorelines on Oahu per USAG-HI Flying Rules?",
+        a: "Maintain at least 1,000 feet AGL over populated/residential areas and at least 500 feet AGL / 500 feet horizontal standoff from shorelines and beaches (unless on an approved approach/departure corridor or tactical training area).",
+        ref: "USAG-HI Reg 95-1, Ch 5"
+      },
+      {
+        id: 85,
+        category: "USAG-HI",
+        q: "What are the specific altitude restrictions over the Schofield Barracks cantonment area and Wheeler AAF housing areas per USAG-HI Flying Rules?",
+        a: "Overflight of Schofield Barracks main cantonment area and family housing is prohibited below 1,500 feet MSL (approx. 600–700 ft AGL) except during published instrument approaches or emergencies.",
+        ref: "USAG-HI Reg 95-1, Ch 5"
+      },
+      {
+        id: 86,
+        category: "USAG-HI",
+        q: "Per USAG-HI Flying Rules, what is the minimum distance Army helicopters must remain from active whales and marine mammals during coastal/inter-island flights?",
+        a: "At least 1,000 feet altitude (or 100 yards/300 feet horizontal/vertical separation per federal NOAA marine mammal protection rules and USAG-HI environmental directives).",
+        ref: "USAG-HI Reg 95-1, Ch 5"
+      },
+      {
+        id: 87,
+        category: "USAG-HI",
+        q: "What are the reporting points and altitudes for the Kaena Point / North Shore VFR transition corridor on Oahu per USAG-HI Flying Rules?",
+        a: "Maintain 500 feet AGL (or published VFR corridor altitude of 500–1,000 ft MSL offshore) outside the shoreline, monitoring Honolulu Control Facility (HCF) and reporting Kaena Point, Haleiwa, and Kahuku Point.",
+        ref: "USAG-HI Reg 95-1, Ch 4"
+      },
+      {
+        id: 88,
+        category: "USAG-HI",
+        q: "Per USAG-HI Flying Rules, what is required before entering any Oahu training area (such as Kahuku Training Area [KTA], Dillingham, East Range, or Makua)?",
+        a: "Active range clearance/check-in with Range Control ('Koa Range') on the assigned FM/UHF frequency prior to entry, plus verification of active NOTAMs and live-fire status.",
+        ref: "USAG-HI Reg 95-1, Ch 6"
+      },
+      {
+        id: 89,
+        category: "USAG-HI",
+        q: "What are the operational restrictions at Dillingham Airfield (PHDH) per USAG-HI Flying Rules?",
+        a: "Monitor CTAF 123.0 MHz, observe glider and skydiving operations (parachuting active daily; avoid overflying drop zones below 10,000 ft MSL when jumpers are aloft), and adhere to strict noise-abatement departure/arrival tracks.",
+        ref: "USAG-HI Reg 95-1, Ch 4 & 6"
+      },
+      {
+        id: 90,
+        category: "USAG-HI",
+        q: "Per USAG-HI Flying Rules, what is the minimum altitude when transiting the Kolekole Pass between Wheeler AAF and the Waianae coast?",
+        a: "Maintain at least 500 feet AGL above the pass floor (approx. 2,200+ feet MSL; pass elevation is ~1,720 feet MSL) and check for wind shear/downdrafts on the leeward side.",
+        ref: "USAG-HI Reg 95-1, Ch 4"
+      },
+      {
+        id: 91,
+        category: "USAG-HI",
+        q: "What overwater survival equipment is mandatory for inter-island flights in Hawaii per USAG-HI Flying Rules?",
+        a: "LPU-34/P (or approved aviation life preserver) worn by all crewmembers and passengers, plus an approved multi-place life raft with survival kit aboard the aircraft whenever flying beyond autorotational gliding distance from land.",
+        ref: "USAG-HI Reg 95-1, Ch 3"
+      },
+      {
+        id: 92,
+        category: "USAG-HI",
+        q: "What are the flight restrictions around Pohakuloa Training Area (PTA) and Bradshaw Army Airfield (PHSF) on the Island of Hawaii per USAG-HI Flying Rules?",
+        a: "Mandatory check-in with Bradshaw Tower / PTA Range Control prior to entering R-3103; adhere to altitude restrictions over Mauna Kea observatories (avoid overflight below 15,000 ft MSL / 1,000 ft AGL) and active impact areas.",
+        ref: "USAG-HI Reg 95-1, Ch 6"
+      },
+      {
+        id: 93,
+        category: "USAG-HI",
+        q: "What is the required transponder code and flight following procedure for inter-island VFR flights in Hawaii per USAG-HI Flying Rules?",
+        a: "File a DD Form 1801 (or ICAO flight plan), obtain a discrete beacon code from Honolulu Control Facility (HCF) prior to departing coastal airspace, and maintain continuous two-way radio/radar flight following.",
+        ref: "USAG-HI Reg 95-1, Ch 3"
+      },
+
+      // ==================== 25TH CAB TACTICAL SOP (12 Questions) ====================
+      {
+        id: 94,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what are the minimum fuel reserves required upon landing at the destination or FARP during tactical/training missions?",
+        a: "30 minutes of fuel (approx. 550–600 lbs on the UH-60M) at planned cruise fuel flow, unless a specific operational waiver is approved by the Battalion Commander.",
+        ref: "25th CAB SOP, Ch 3 (Flight Operations)"
+      },
+      {
+        id: 95,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what is the minimum hover power margin required for conducting high-altitude or confined-area LZ operations (such as KTA ridge LZs or PTA)?",
+        a: "At least 10% torque margin between Torque Required to Hover OGE and Maximum Torque Available (Dual Engine) for confined areas/pinnacles.",
+        ref: "25th CAB SOP, Ch 3"
+      },
+      {
+        id: 96,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what is the standard crew composition for an Air Assault or Multi-Ship Tactical UH-60M mission?",
+        a: "Two rated pilots (PC and PI) plus two non-rated crewmembers (Crew Chiefs/Door Gunners) to provide full 360-degree airspace/obstacle surveillance and cabin management.",
+        ref: "25th CAB SOP, Ch 2 & 3"
+      },
+      {
+        id: 97,
+        category: "25th CAB SOP",
+        q: "What is the 25th CAB SOP standard for Inadvertent IMC (IIMC) separation during multi-ship formation flight?",
+        a: "Immediate altitude and heading separation per the pre-briefed IIMC matrix (typically: Lead maintains heading and climbs to MSA; Chalk 2 turns 30° right and climbs to MSA + 500 ft; Chalk 3 turns 30° left and climbs to MSA + 1,000 ft; squawk 7700 and contact ATC).",
+        ref: "25th CAB SOP, Ch 4 (Multi-Ship Ops)"
+      },
+      {
+        id: 98,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what is the minimum separation distance between aircraft in a multi-ship flight during day VMC and night/NVG VMC?",
+        a: "Day VMC: Minimum 3 to 5 rotor disks (~160–270 feet) in staggered trail/echelon. Night/NVG VMC: Minimum 5 to 7 rotor disks (~270–380 feet) with 25–50 feet vertical step-up.",
+        ref: "25th CAB SOP, Ch 4"
+      },
+      {
+        id: 99,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, when must a Deliberate Risk Assessment Worksheet (DRAW) be completed, briefed, and signed?",
+        a: "Prior to every flight/mission; signed by the PC and approved by the appropriate Risk Approval Authority (Company Commander for Low/Moderate; Battalion/Brigade Commander for High) before engine start.",
+        ref: "25th CAB SOP, Ch 1 (Safety & RM)"
+      },
+      {
+        id: 100,
+        category: "25th CAB SOP",
+        q: "What are the 25th CAB SOP procedures for Hot Refueling (FARP) operations regarding crew duties and passenger occupancy?",
+        a: "No passengers allowed aboard during hot refueling unless specifically authorized for MEDEVAC/combat urgency; one pilot remains at the flight controls at all times; one crewmember exits to act as safety/grounding/fireguard; anti-collision lights turned OFF.",
+        ref: "25th CAB SOP, Ch 5 (FARP Operations)"
+      },
+      {
+        id: 101,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what is the standard communication check-in timeline ('Ops Normal' / Flight Following) when operating outside radar/ATC coverage?",
+        a: "Every 30 minutes (or at designated phase lines/checkpoints) via FM/HF/SATCOM/Blue Force Tracker with Battalion Tactical Operations Center (TOC) or Flight Operations.",
+        ref: "25th CAB SOP, Ch 3"
+      },
+      {
+        id: 102,
+        category: "25th CAB SOP",
+        q: "What is the 25th CAB SOP rule regarding door gun/crew-served weapon clearing and status calls prior to entering a Cold LZ or returning to Wheeler AAF?",
+        a: "Weapons must be cleared, bolts forward on an empty chamber, feed trays clear, barrels pointed outboard/safe, and confirmed 'GREEN / CLEAR' by the Crew Chiefs to the PC prior to crossing the airfield boundary.",
+        ref: "25th CAB SOP, Ch 6 (Gunnery & Armament)"
+      },
+      {
+        id: 103,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what weather conditions mandate a 'No-Go' or command-level weather waiver for local NVG training flights?",
+        a: "Illumination below 23% (unless high-light/cultural lighting conditions are approved by the Battalion Commander), ceiling below 1,500 feet AGL, visibility below 3 SM, or forecast moderate/severe turbulence or wind shear.",
+        ref: "25th CAB SOP, Ch 3"
+      },
+      {
+        id: 104,
+        category: "25th CAB SOP",
+        q: "Per the 25th CAB SOP, what actions must the crew take immediately upon experiencing an uncommanded flight control movement, caution/warning light, or bird strike?",
+        a: "Maintain aircraft control, execute the appropriate TM -10 emergency procedure, notify Flight Lead/ATC, land as soon as practicable/possible, and submit a Hazard/Incident Report to Battalion Safety upon landing.",
+        ref: "25th CAB SOP, Ch 1"
+      },
+      {
+        id: 105,
+        category: "25th CAB SOP",
+        q: "What is the 25th CAB SOP 'Knock-It-Off' policy during training exercises?",
+        a: "Any crewmember, ground controller, or observer may call 'KNOCK IT OFF' over the radio or ICS whenever an unsafe condition, loss of situational awareness, or airspace/terrain conflict is observed. All aircraft immediately cease tactical maneuvering, climb to safe altitude, and establish positive separation.",
+        ref: "25th CAB SOP, Ch 1"
+      }
+    ];
+
+    let currentPool = [...questionBank];
+    let lastQuestionId = null;
+
+    const categoryFilter = document.getElementById("categoryFilter");
+    const poolCounter = document.getElementById("poolCounter");
+    const qCategory = document.getElementById("qCategory");
+    const qId = document.getElementById("qId");
+    const qText = document.getElementById("qText");
+    const answerBox = document.getElementById("answerBox");
+    const aText = document.getElementById("aText");
+    const rText = document.getElementById("rText");
+    const revealBtn = document.getElementById("revealBtn");
+
+    function updatePool() {
+      const selected = categoryFilter.value;
+      if (selected === "ALL") {
+        currentPool = [...questionBank];
+      } else {
+        currentPool = questionBank.filter(item => item.category === selected);
+      }
+      poolCounter.textContent = `Pool: ${currentPool.length}`;
+      nextRandomQuestion();
+    }
+
+    function nextRandomQuestion() {
+      if (currentPool.length === 0) return;
+
+      let candidate;
+      if (currentPool.length === 1) {
+        candidate = currentPool[0];
+      } else {
+        do {
+          const randomIndex = Math.floor(Math.random() * currentPool.length);
+          candidate = currentPool[randomIndex];
+        } while (candidate.id === lastQuestionId);
+      }
+
+      lastQuestionId = candidate.id;
+
+      // Reset answer visibility
+      answerBox.classList.remove("visible");
+      revealBtn.textContent = "Reveal Answer";
+
+      // Populate card
+      qCategory.textContent = candidate.category;
+      qId.textContent = `#${String(candidate.id).padStart(3, "0")} of ${questionBank.length}`;
+      qText.textContent = candidate.q;
+      aText.textContent = candidate.a;
+      rText.textContent = `Reference: ${candidate.ref}`;
+    }
+
+    function toggleAnswer() {
+      const isVisible = answerBox.classList.toggle("visible");
+      revealBtn.textContent = isVisible ? "Hide Answer" : "Reveal Answer";
+    }
+
+    categoryFilter.addEventListener("change", updatePool);
+
+    // Load a random question immediately when the QR code opens the page
+    window.addEventListener("DOMContentLoaded", () => {
+      nextRandomQuestion();
+    });
+  </script>
+</body>
+</html>
